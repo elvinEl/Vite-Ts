@@ -13,7 +13,12 @@ export const basketSlice = createSlice({
       state: basketInitialState,
       action: PayloadAction<TopProductsType>
     ) => {
-      state.basket = [...state.basket, action.payload];
+      const existingProduct = state.basket.find(
+        (product) => product.id === action.payload.id
+      );
+      if (!existingProduct) {
+        state.basket = [...state.basket, action.payload];
+      }
     },
     deleteBasket: (
       state: basketInitialState,
