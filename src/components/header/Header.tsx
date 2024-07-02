@@ -3,9 +3,13 @@ import Search from "./Search";
 import Menu from "./Menu";
 import { CgProfile } from "react-icons/cg";
 import { SlBasket } from "react-icons/sl";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 function Header() {
   const menuItems: string[] = ["Оплата", "Доставка", "Контакты", "Госзаказ"];
+  const basketItems = useSelector((state: RootState) => state.basket.basket);
+
   return (
     <>
       <div className="grid grid-cols-3 py-8 text-[18px] font-medium">
@@ -33,7 +37,12 @@ function Header() {
         <Menu />
         <Search />
         <div className="flex justify-end items-center gap-8">
-          <SlBasket size={28} />
+          <NavLink className="relative" to="/basket">
+            <p className="bg-yellow-500 rounded-[50%] h-[25px] w-[25px] flex justify-center items-center text-white absolute top-[-20px] right-[-20px]">
+              {basketItems.length}{" "}
+            </p>
+            <SlBasket size={28} />
+          </NavLink>
           <CgProfile size={28} />
         </div>
       </div>
