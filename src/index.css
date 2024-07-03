@@ -6,3 +6,15 @@
   padding: 0;
   box-sizing: border-box;
 }
+:root {
+  &:has(input[name="color-scheme"][value="light"]:checked) {
+    color-scheme: light;
+  }
+  &:has(input[name="color-scheme"][value="dark"]:checked) {
+    color-scheme: dark;
+  }
+}
+body {
+  background-color: Canvas;
+  color: CanvasText;
+}

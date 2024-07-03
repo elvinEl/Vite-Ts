@@ -3,6 +3,7 @@ import { TopProductsType } from "../../types/Types";
 import { useDispatch } from "react-redux";
 import { addBasket } from "../../redux/basketSlice";
 import toast, { Toaster } from "react-hot-toast";
+import { NavLink } from "react-router-dom";
 
 function TopProducts() {
   const dispatch = useDispatch();
@@ -17,8 +18,10 @@ function TopProducts() {
       <p className="text-[30px] font-medium">Популярные товары</p>
       <div className="grid grid-cols-6 gap-6 py-4">
         {data.map((product: TopProductsType) => (
-          <div key={product.id} className="col-span-1 cursor-pointer ">
-            <img className="w-full" src={product.img} alt="" />
+          <div key={product.id} className="col-span-1">
+            <NavLink to={`/detail/${product.id}`}>
+              <img className="w-full" src={product.img} alt="" />
+            </NavLink>
             <p className="font-bold flex gap-1 mt-2">
               Цена:
               <span className="font-normal">{product.price.toFixed(3)}₽</span>

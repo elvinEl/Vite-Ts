@@ -1,6 +1,8 @@
 function Footer() {
   return (
-    <div>Footer</div>
+    <div className="h-[20rem] bg-black w-full">
+      Footer content goes here...
+    </div>
   )
 }
 

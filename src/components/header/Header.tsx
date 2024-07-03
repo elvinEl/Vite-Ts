@@ -5,7 +5,6 @@ import { CgProfile } from "react-icons/cg";
 import { SlBasket } from "react-icons/sl";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-
 function Header() {
   const menuItems: string[] = ["Оплата", "Доставка", "Контакты", "Госзаказ"];
   const basketItems = useSelector((state: RootState) => state.basket.basket);
@@ -29,7 +28,15 @@ function Header() {
             </NavLink>
           ))}
         </div>
-        <div className="col-span-1 flex justify-end items-center">
+        <div className="col-span-1 flex justify-end items-center gap-4">
+          {/* <label>
+            <input type="radio" name="color-scheme" value="light" />
+            Light
+          </label>
+          <label>
+            <input type="radio" name="color-scheme" value="dark" />
+            Dark
+          </label> */}
           <p>8 800 355 55 55</p>
         </div>
       </div>

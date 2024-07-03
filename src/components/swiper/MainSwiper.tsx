@@ -21,7 +21,7 @@ export default function MainSwiper() {
       >
         {swiperData.map((data: SwiperType) => (
           <SwiperSlide key={data.id}>
-            <div className="bg-[#365EDC] rounded-[20px] flex justify-center items-center text-white p-4 my-8">
+            <div className="bg-[#365EDC] rounded-[20px] flex justify-center items-center text-white p-4">
               <div className="flex flex-col justify-start items-start gap-4">
                 <p className="text-[40px]">{data.title}</p>
                 <p className="text-[22px] text-[#BDCDFF]">{data.description}</p>
