@@ -7,6 +7,7 @@ export interface TopProductsType {
   price: number;
   title: string;
   btnText: string;
+  quantity: number;
 }
 export interface SwiperType {
   id: number;

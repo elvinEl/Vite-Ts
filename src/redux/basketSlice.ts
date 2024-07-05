@@ -17,7 +17,7 @@ export const basketSlice = createSlice({
         (product) => product.id === action.payload.id
       );
       if (!existingProduct) {
-        state.basket = [...state.basket, action.payload];
+        state.basket = [...state.basket, { ...action.payload, quantity: 1 }];
       }
     },
     deleteBasket: (
@@ -28,7 +28,30 @@ export const basketSlice = createSlice({
         (product: TopProductsType) => product.id !== action.payload
       );
     },
+    incrementQuantity: (
+      state: basketInitialState,
+      action: PayloadAction<number>
+    ) => {
+      const product = state.basket.find(
+        (product: TopProductsType) => product.id === action.payload
+      );
+      if (product) {
+        product.quantity += 1;
+      }
+    },
+    decrementQuantity: (
+      state: basketInitialState,
+      action: PayloadAction<number>
+    ) => {
+      const product = state.basket.find(
+        (product: TopProductsType) => product.id === action.payload
+      );
+      if (product && product.quantity >= 1) {
+        product.quantity -= 1;
+      }
+    },
   },
 });
-export const { addBasket, deleteBasket } = basketSlice.actions;
+export const { addBasket, deleteBasket, incrementQuantity, decrementQuantity } =
+  basketSlice.actions;
 export default basketSlice.reducer;
