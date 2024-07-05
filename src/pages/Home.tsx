@@ -1,4 +1,4 @@
-import TopProducts from "../components/products/TopProducts";
+import TopProducts from "../components/products/Products";
 import MainSwiper from "../components/swiper/MainSwiper";
 function Home() {
   return (

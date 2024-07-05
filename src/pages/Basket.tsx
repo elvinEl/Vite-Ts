@@ -8,6 +8,7 @@ import {
 } from "../redux/basketSlice";
 import { FaRegTrashAlt } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
+import { NavLink } from "react-router-dom";
 
 function Basket() {
   const dispatch = useDispatch();
@@ -35,7 +36,9 @@ function Basket() {
       <div className="grid grid-cols-2 py-8 gap-8">
         {basketItems.map((item: TopProductsType) => (
           <div className="col-span-1 flex gap-4  font-medium" key={item.id}>
-            <img src={item.img} alt="" />
+            <NavLink to={`/detail/${item.id}`}>
+              <img className="h-[200px] object-cover w-full" src={item.img} alt="" />
+            </NavLink>
             <div>
               {item.title} - {item.price.toFixed(3)}₽ x {item.quantity}
               <div className="flex gap-2">
@@ -64,7 +67,7 @@ function Basket() {
         ))}
       </div>
       <p className="font-medium text-[24px]">
-      Общие цены:{calculateTotalPrice()}₽
+        Общие цены:{calculateTotalPrice()}₽
       </p>
     </div>
   );
