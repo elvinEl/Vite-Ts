@@ -4,7 +4,7 @@ import { TopProductsType } from "../../types/Types";
 import { addBasket } from "../../redux/basketSlice";
 import { useDispatch } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
-
+import Button from "../button/Button";
 function DetailProducts() {
   const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
@@ -34,12 +34,12 @@ function DetailProducts() {
             <p className="text-3xl font-semibold text-blue-600 mb-4">
               {product?.price.toFixed(3)}₽
             </p>
-            <button
+            <Button
               onClick={() => handleAddBasket(product)}
               className="px-5 py-2 mt-2 rounded-sm hover:bg-blue-800 duration-200 bg-[#365EDC]  uppercase text-white text-[14px]"
             >
               {product?.btnText}
-            </button>
+            </Button>
           </div>
         </div>
       </div>

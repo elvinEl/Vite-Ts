@@ -5,6 +5,7 @@ import { addBasket } from "../../redux/basketSlice";
 import toast, { Toaster } from "react-hot-toast";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
+import Button from "../button/Button";
 
 function TopProducts() {
   const dispatch = useDispatch();
@@ -16,7 +17,6 @@ function TopProducts() {
   };
 
   const handleFilter = (filterValue: string) => {
-    console.log(filterValue);
     setSelectedFilter(filterValue);
     if (filterValue === "asc") {
       const sortedProducts = [...products].sort((a, b) => a.price - b.price);
@@ -57,12 +57,12 @@ function TopProducts() {
               <span className="font-normal">{product.price.toFixed(3)}₽</span>
             </p>
             <p className="text-[14px] mt-2">{product.title}</p>
-            <button
+            <Button
               onClick={() => handleAddBasket(product)}
               className="px-5 py-2 mt-2 rounded-sm hover:bg-blue-800 duration-200 bg-[#365EDC]  uppercase text-white text-[14px]"
             >
               {product.btnText}
-            </button>
+            </Button>
           </div>
         ))}
       </div>
