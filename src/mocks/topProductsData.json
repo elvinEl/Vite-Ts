@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "img": "../img/c2.png",
+    "img": ["../img/c2.png", "../img/c1.png", "../img/c5.png"],
     "price": 12.99,
     "title": "Стул ученический трансформер “Одуванчик”",
     "btnText": "в корзину",
@@ -9,7 +9,7 @@
   },
   {
     "id": 2,
-    "img": "../img/c1.png",
+    "img": ["../img/c1.png", "../img/c4.png", "../img/c2.png"],
     "price": 13.75,
     "title": "Стул ученический трансформер “Лилия”",
     "btnText": "в корзину",
@@ -17,7 +17,7 @@
   },
   {
     "id": 3,
-    "img": "../img/c2.png",
+    "img": ["../img/c2.png", "../img/c4.png", "../img/c2.png"],
     "price": 14.25,
     "title": "Стул ученический трансформер “Орхидея”",
     "btnText": "в корзину",
@@ -25,23 +25,23 @@
   },
   {
     "id": 4,
-    "img": "../img/c3.png",
-    "price": 15.50,
+    "img": ["../img/c3.png", "../img/c4.png", "../img/c2.png"],
+    "price": 15.5,
     "title": "Стул ученический трансформер “Тюльпан”",
     "btnText": "в корзину",
     "quantity": 1
   },
   {
     "id": 5,
-    "img": "../img/c4.png",
-    "price": 16.80,
+    "img": ["../img/c4.png", "../img/c4.png", "../img/c2.png"],
+    "price": 16.8,
     "title": "Стул ученический трансформер “Роза”",
     "btnText": "в корзину",
     "quantity": 1
   },
   {
     "id": 6,
-    "img": "../img/c5.png",
+    "img": ["../img/c5.png", "../img/c4.png", "../img/c2.png"],
     "price": 17.99,
     "title": "Стул ученический трансформер “Незабудка”",
     "btnText": "в корзину",
@@ -49,7 +49,7 @@
   },
   {
     "id": 7,
-    "img": "../img/c6.png",
+    "img": ["../img/c6.png", "../img/c4.png", "../img/c2.png"],
     "price": 18.45,
     "title": "Стул ученический трансформер “Фиалка”",
     "btnText": "в корзину",
@@ -57,7 +57,7 @@
   },
   {
     "id": 8,
-    "img": "../img/c7.png",
+    "img": ["../img/c7.png", "../img/c4.png", "../img/c2.png"],
     "price": 19.75,
     "title": "Стул ученический трансформер “Астра”",
     "btnText": "в корзину",
@@ -65,8 +65,8 @@
   },
   {
     "id": 9,
-    "img": "../img/c5.png",
-    "price": 20.20,
+    "img": ["../img/c5.png", "../img/c4.png", "../img/c2.png"],
+    "price": 20.2,
     "title": "Стул ученический трансформер “Георгин”",
     "btnText": "в корзину",
     "quantity": 1

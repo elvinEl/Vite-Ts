@@ -44,8 +44,8 @@ function Basket() {
               <div className="col-span-1 flex gap-4  font-medium" key={item.id}>
                 <NavLink to={`/detail/${item.id}`}>
                   <img
-                    className="h-[200px] object-cover w-full"
-                    src={item.img}
+                    className="h-[200px] w-[200px] object-cover "
+                    src={item.img[0]}
                     alt=""
                   />
                 </NavLink>

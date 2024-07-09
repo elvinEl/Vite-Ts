@@ -3,7 +3,7 @@ export interface basketInitialState {
 }
 export interface TopProductsType {
   id: number;
-  img: string;
+  img: string[];
   price: number;
   title: string;
   btnText: string;
