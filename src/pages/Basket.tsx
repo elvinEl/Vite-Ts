@@ -14,6 +14,7 @@ import Button from "../components/button/Button";
 function Basket() {
   const dispatch = useDispatch();
   const basketItems = useSelector((state: RootState) => state.basket.basket);
+  const theme = useSelector((state: RootState) => state.theme.colorScheme);
 
   const calculateTotalPrice = () => {
     let totalPrice: number = 0;
@@ -54,14 +55,18 @@ function Basket() {
                   <div className="flex gap-2">
                     <Button
                       onClick={() => handleIncrementPrice(item.id)}
-                      className=" text-black px-3 hover:shadow-md border-[1px] border-gray-200 rounded-[4px] duration-200 "
+                      className={` text-black px-3 hover:shadow-md border-[1px] border-gray-200 rounded-[4px] duration-200 ${
+                        theme === "dark" ? "text-white" : ""
+                      }`}
                     >
                       +
                     </Button>
 
                     <Button
                       onClick={() => handleDecrementPrice(item.id)}
-                      className=" text-black px-3 hover:shadow-md rounded-[4px] border-[1px] border-gray-200 duration-200 "
+                      className={` text-black px-3 hover:shadow-md border-[1px] border-gray-200 rounded-[4px] duration-200 ${
+                        theme === "dark" ? "text-white" : ""
+                      }`}
                     >
                       -
                     </Button>

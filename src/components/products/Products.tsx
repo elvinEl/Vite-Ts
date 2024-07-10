@@ -1,14 +1,16 @@
 import data from "../../mocks/topProductsData.json";
 import { TopProductsType } from "../../types/Types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addBasket } from "../../redux/basketSlice";
 import toast, { Toaster } from "react-hot-toast";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import Button from "../button/Button";
+import { RootState } from "../../redux/store";
 
 function TopProducts() {
   const dispatch = useDispatch();
+  const theme = useSelector((state: RootState) => state.theme.colorScheme);
   const [products, setProducts] = useState<TopProductsType[]>(data);
   const [selectedFilter, setSelectedFilter] = useState("");
   const handleAddBasket = (product: TopProductsType) => {
@@ -33,7 +35,9 @@ function TopProducts() {
         <p className="text-[30px] font-medium">Недавние объявления</p>
 
         <select
-          className="border-[1px] outline-none"
+          className={`border-[1px] outline-none p-1 ${
+            theme === "dark" ? "bg-black" : ""
+          }`}
           onChange={(e) => handleFilter(e.target.value)}
           value={selectedFilter}
         >

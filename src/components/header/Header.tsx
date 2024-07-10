@@ -5,10 +5,11 @@ import { CgProfile } from "react-icons/cg";
 import { SlBasket } from "react-icons/sl";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import Theme from "../theme/Theme";
+
 function Header() {
   const menuItems: string[] = ["Оплата", "Доставка", "Контакты", "Госзаказ"];
   const basketItems = useSelector((state: RootState) => state.basket.basket);
-
   return (
     <>
       <div className="grid grid-cols-3 py-8 text-[18px] font-medium">
@@ -29,14 +30,7 @@ function Header() {
           ))}
         </div>
         <div className="col-span-1 flex justify-end items-center gap-4">
-          {/* <label>
-            <input type="radio" name="color-scheme" value="light" />
-            Light
-          </label>
-          <label>
-            <input type="radio" name="color-scheme" value="dark" />
-            Dark
-          </label> */}
+          <Theme />
           <p>8 800 355 55 55</p>
         </div>
       </div>

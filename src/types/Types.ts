@@ -36,3 +36,6 @@ export interface InputProps {
   autoComplete: string;
   checked: boolean;
 }
+export interface ColorTheme {
+  colorScheme: string;
+}
