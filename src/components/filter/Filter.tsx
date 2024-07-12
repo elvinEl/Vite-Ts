@@ -1,8 +1,5 @@
-
 function Filter() {
-  return (
-    <div>Filter</div>
-  )
+  return <div></div>;
 }
 
-export default Filter
+export default Filter;

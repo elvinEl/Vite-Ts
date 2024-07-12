@@ -21,7 +21,7 @@ function Basket() {
     basketItems.forEach((item: TopProductsType) => {
       totalPrice += item.price * item.quantity;
     });
-    return totalPrice.toFixed(3);
+    return totalPrice;
   };
   const handleDeleteItem = (id: number) => {
     dispatch(deleteBasket(id));
@@ -51,7 +51,7 @@ function Basket() {
                   />
                 </NavLink>
                 <div>
-                  {item.title} - {item.price.toFixed(3)}₽ x {item.quantity}
+                  {item.title} - {item.price}₽ x {item.quantity}
                   <div className="flex gap-2">
                     <Button
                       onClick={() => handleIncrementPrice(item.id)}

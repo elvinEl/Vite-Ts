@@ -66,7 +66,7 @@ function TopProducts() {
             </NavLink>
             <p className="font-bold flex gap-1 mt-2">
               Цена:
-              <span className="font-normal">{product.price.toFixed(3)}₽</span>
+              <span className="font-normal">{product.price}₽</span>
             </p>
             <p className="text-[14px] mt-2 line-clamp-2">{product.title}</p>
             <Button

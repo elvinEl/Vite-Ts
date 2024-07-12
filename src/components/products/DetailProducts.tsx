@@ -73,7 +73,7 @@ function DetailProducts() {
           <div>
             <p className="text-4xl font-bold mb-4">{product?.title}</p>
             <p className="text-3xl font-semibold text-blue-600 mb-4">
-              {product?.price.toFixed(3)}₽
+              {product?.price}₽
             </p>
             <Button
               onClick={() => handleAddBasket(product)}
