@@ -1,162 +1,214 @@
-[
-  {
-    "id": 1,
-    "img": ["../img/c1.png", "../img/c4.png", "../img/c7.png"],
-    "price": 1250,
-    "title": "Стул ученический трансформер “Роза”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 2,
-    "img": ["../img/c2.png", "../img/c5.png", "../img/c3.png"],
-    "price": 1300,
-    "title": "Стул ученический трансформер “Лаванда”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 3,
-    "img": ["../img/c6.png", "../img/c1.png", "../img/c4.png"],
-    "price": 1400,
-    "title": "Стул ученический трансформер “Орхидея”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 4,
-    "img": ["../img/c3.png", "../img/c2.png", "../img/c5.png"],
-    "price": 1450,
-    "title": "Стул ученический трансформер “Незабудка”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 5,
-    "img": ["../img/c4.png", "../img/c7.png", "../img/c1.png"],
-    "price": 1500,
-    "title": "Стул ученический трансформер “Фиалка”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 6,
-    "img": ["../img/c7.png", "../img/c3.png", "../img/c6.png"],
-    "price": 1550,
-    "title": "Стул ученический трансформер “Лилия”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 7,
-    "img": ["../img/c5.png", "../img/c2.png", "../img/c4.png"],
-    "price": 1600,
-    "title": "Стул ученический трансформер “Тюльпан”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 8,
-    "img": ["../img/c1.png", "../img/c6.png", "../img/c3.png"],
-    "price": 1650,
-    "title": "Стул ученический трансформер “Астра”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 9,
-    "img": ["../img/c2.png", "../img/c7.png", "../img/c1.png"],
-    "price": 1700,
-    "title": "Стул ученический трансформер “Георгин”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 10,
-    "img": ["../img/c6.png", "../img/c5.png", "../img/c3.png"],
-    "price": 1750,
-    "title": "Стул ученический трансформер “Роза”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 11,
-    "img": ["../img/c3.png", "../img/c4.png", "../img/c7.png"],
-    "price": 1800,
-    "title": "Стул ученический трансформер “Лаванда”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 12,
-    "img": ["../img/c1.png", "../img/c6.png", "../img/c2.png"],
-    "price": 1850,
-    "title": "Стул ученический трансформер “Орхидея”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 13,
-    "img": ["../img/c4.png", "../img/c2.png", "../img/c5.png"],
-    "price": 1900,
-    "title": "Стул ученический трансформер “Незабудка”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 14,
-    "img": ["../img/c7.png", "../img/c3.png", "../img/c1.png"],
-    "price": 1950,
-    "title": "Стул ученический трансформер “Фиалка”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 15,
-    "img": ["../img/c5.png", "../img/c6.png", "../img/c2.png"],
-    "price": 2000,
-    "title": "Стул ученический трансформер “Лилия”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 16,
-    "img": ["../img/c2.png", "../img/c1.png", "../img/c4.png"],
-    "price": 2050,
-    "title": "Стул ученический трансформер “Тюльпан”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 17,
-    "img": ["../img/c3.png", "../img/c5.png", "../img/c6.png"],
-    "price": 2100,
-    "title": "Стул ученический трансформер “Астра”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 18,
-    "img": ["../img/c4.png", "../img/c7.png", "../img/c3.png"],
-    "price": 2150,
-    "title": "Стул ученический трансформер “Георгин”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 19,
-    "img": ["../img/c6.png", "../img/c4.png", "../img/c2.png"],
-    "price": 2200,
-    "title": "Стул ученический трансформер “Роза”",
-    "btnText": "в корзину",
-    "quantity": 1
-  },
-  {
-    "id": 20,
-    "img": ["../img/c1.png", "../img/c5.png", "../img/c7.png"],
-    "price": 2250,
-    "title": "Стул ученический трансформер “Лаванда”",
-    "btnText": "в корзину",
-    "quantity": 1
-  }
-]
+{
+  "categories": [
+    {
+      "name": "Chairs",
+      "items": [
+        {
+          "id": 1,
+          "img": ["../img/c1.png", "../img/c4.png", "../img/c7.png"],
+          "price": 1250,
+          "title": "Стул ученический трансформер “Роза”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 2,
+          "img": ["../img/c2.png", "../img/c5.png", "../img/c3.png"],
+          "price": 1300,
+          "title": "Стул ученический трансформер “Лаванда”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 3,
+          "img": ["../img/c6.png", "../img/c1.png", "../img/c4.png"],
+          "price": 1400,
+          "title": "Стул ученический трансформер “Орхидея”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 4,
+          "img": ["../img/c3.png", "../img/c2.png", "../img/c5.png"],
+          "price": 1450,
+          "title": "Стул ученический трансформер “Незабудка”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 5,
+          "img": ["../img/c4.png", "../img/c7.png", "../img/c1.png"],
+          "price": 1500,
+          "title": "Стул ученический трансформер “Фиалка”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 6,
+          "img": ["../img/c7.png", "../img/c3.png", "../img/c6.png"],
+          "price": 1550,
+          "title": "Стул ученический трансформер “Лилия”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 7,
+          "img": ["../img/c5.png", "../img/c2.png", "../img/c4.png"],
+          "price": 1600,
+          "title": "Стул ученический трансформер “Тюльпан”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 8,
+          "img": ["../img/c1.png", "../img/c6.png", "../img/c3.png"],
+          "price": 1650,
+          "title": "Стул ученический трансформер “Астра”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 9,
+          "img": ["../img/c2.png", "../img/c7.png", "../img/c1.png"],
+          "price": 1700,
+          "title": "Стул ученический трансформер “Георгин”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 10,
+          "img": ["../img/c6.png", "../img/c5.png", "../img/c3.png"],
+          "price": 1750,
+          "title": "Стул ученический трансформер “Роза”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 11,
+          "img": ["../img/c3.png", "../img/c4.png", "../img/c7.png"],
+          "price": 1800,
+          "title": "Стул ученический трансформер “Лаванда”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 12,
+          "img": ["../img/c1.png", "../img/c6.png", "../img/c2.png"],
+          "price": 1850,
+          "title": "Стул ученический трансформер “Орхидея”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 13,
+          "img": ["../img/c4.png", "../img/c2.png", "../img/c5.png"],
+          "price": 1900,
+          "title": "Стул ученический трансформер “Незабудка”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 14,
+          "img": ["../img/c7.png", "../img/c3.png", "../img/c1.png"],
+          "price": 1950,
+          "title": "Стул ученический трансформер “Фиалка”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 15,
+          "img": ["../img/c5.png", "../img/c6.png", "../img/c2.png"],
+          "price": 2000,
+          "title": "Стул ученический трансформер “Лилия”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 16,
+          "img": ["../img/c2.png", "../img/c1.png", "../img/c4.png"],
+          "price": 2050,
+          "title": "Стул ученический трансформер “Тюльпан”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 17,
+          "img": ["../img/c3.png", "../img/c5.png", "../img/c6.png"],
+          "price": 2100,
+          "title": "Стул ученический трансформер “Астра”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 18,
+          "img": ["../img/c4.png", "../img/c7.png", "../img/c3.png"],
+          "price": 2150,
+          "title": "Стул ученический трансформер “Георгин”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 19,
+          "img": ["../img/c6.png", "../img/c4.png", "../img/c2.png"],
+          "price": 2200,
+          "title": "Стул ученический трансформер “Роза”",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 20,
+          "img": ["../img/c1.png", "../img/c5.png", "../img/c7.png"],
+          "price": 2250,
+          "title": "Стул ученический трансформер “Лаванда”",
+          "btnText": "в корзину",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "name": "Phones",
+      "items": [
+        {
+          "id": 21,
+          "img": ["../img/t1.png", "../img/t2.png", "../img/t3.png"],
+          "price": 3000,
+          "title": "Iphone 15",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 22,
+          "img": ["../img/t4.png", "../img/t5.png", "../img/t6.png"],
+          "price": 3500,
+          "title": "Samsung",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 23,
+          "img": ["../img/t7.png", "../img/t8.png", "../img/t9.png"],
+          "price": 4000,
+          "title": "Xiaomi",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 24,
+          "img": ["../img/t10.png", "../img/t11.png"],
+          "price": 4500,
+          "title": "Nokia",
+          "btnText": "в корзину",
+          "quantity": 1
+        },
+        {
+          "id": 25,
+          "img": ["../img/t13.png", "../img/t14.png", "../img/t15.png"],
+          "price": 5000,
+          "title": "Aйфон 15",
+          "btnText": "в корзину",
+          "quantity": 1
+        }
+      ]
+    }
+  ]
+}

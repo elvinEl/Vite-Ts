@@ -12,8 +12,12 @@ import { handleAddBasket } from "../utilities/handleBasket";
 function TopProducts() {
   const dispatch = useDispatch();
   const theme = useSelector((state: RootState) => state.theme.colorScheme);
+
+  const chairs =
+    data.categories.find((category) => category.name === "Chairs")?.items ?? [];
+
   const [products, setProducts] = useState<TopProductsType[]>(
-    data.slice(0, 12)
+    chairs.slice(0, 12)
   );
   const [selectedFilter, setSelectedFilter] = useState("");
   const handleFilter = (filterValue: string) => {
@@ -61,8 +65,11 @@ function TopProducts() {
       <div className="grid grid-cols-5 gap-5 py-4 max-2xl:grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
         {products.map((product: TopProductsType) => (
           <div key={product.id} className="col-span-1 product-card">
-            <NavLink to={`/detail/${product.id}`}>
-              <img className="w-full h-[200px]" src={product.img[0]} alt="" />
+            <NavLink
+              to={`/detail/${product.id}`}
+              className="flex justify-center"
+            >
+              <img className="h-[200px]" src={product.img[0]} alt="" />
             </NavLink>
             <p className="font-bold flex gap-1 mt-2">
               Цена:

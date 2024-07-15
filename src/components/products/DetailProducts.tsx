@@ -9,9 +9,10 @@ import Button from "../button/Button";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
 
 function DetailProducts() {
+  const allProducts = productData.categories.flatMap(category => category.items);
   const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
-  const product = productData.find(
+  const product = allProducts.find(
     (product: TopProductsType) => product.id.toString() === id
   );
   const [selectedImg, setSelectedImg] = useState(product?.img[0]);
