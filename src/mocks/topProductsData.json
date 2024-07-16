@@ -1,7 +1,7 @@
 {
   "categories": [
     {
-      "name": "Chairs",
+      "name": "chairs",
       "items": [
         {
           "id": 1,
@@ -166,7 +166,7 @@
       ]
     },
     {
-      "name": "Phones",
+      "name": "phones",
       "items": [
         {
           "id": 21,

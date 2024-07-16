@@ -14,10 +14,10 @@ function TopProducts() {
   const theme = useSelector((state: RootState) => state.theme.colorScheme);
 
   const chairs =
-    data.categories.find((category) => category.name === "Chairs")?.items ?? [];
+    data.categories.find((category) => category.name === "chairs")?.items ?? [];
 
   const [products, setProducts] = useState<TopProductsType[]>(
-    chairs.slice(0, 12)
+    chairs.slice(0, 10)
   );
   const [selectedFilter, setSelectedFilter] = useState("");
   const handleFilter = (filterValue: string) => {

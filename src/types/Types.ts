@@ -39,3 +39,13 @@ export interface InputProps {
 export interface ColorTheme {
   colorScheme: string;
 }
+export interface Category {
+  name: string;
+  subcategories: string[];
+}
+export interface CategoryData {
+  categories: Category[];
+}
+export interface CategoryInitialState {
+  selectedCategory: string | null;
+}

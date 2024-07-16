@@ -1,0 +1,12 @@
+{
+  "categories": [
+    {
+      "name": "Electronics",
+      "subcategories": ["phones", "computers", "accessories"]
+    },
+    {
+      "name": "Household products",
+      "subcategories": ["chairs"]
+    }
+  ]
+}

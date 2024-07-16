@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import Basket from "./pages/Basket";
 import DetailProducts from "./components/products/DetailProducts";
 import AllProducts from "./components/products/AllProducts";
+import Category from "./pages/Category";
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -19,6 +20,7 @@ function App() {
         <Route path="basket" element={<Basket />} />
         <Route path="detail/:id" element={<DetailProducts />} />
         <Route path="all-products" element={<AllProducts />} />
+        <Route path="category/:slug" element={<Category />} />
       </Route>
     )
   );

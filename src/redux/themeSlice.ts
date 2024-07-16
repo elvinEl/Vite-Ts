@@ -1,5 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice ,PayloadAction} from "@reduxjs/toolkit";
 import { ColorTheme } from "../types/Types";
 const initialState: ColorTheme = {
   colorScheme: "light",

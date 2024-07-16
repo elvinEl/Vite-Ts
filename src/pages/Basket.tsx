@@ -10,6 +10,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
 import { NavLink } from "react-router-dom";
 import Button from "../components/button/Button";
+import { AiOutlineInbox } from "react-icons/ai";
 
 function Basket() {
   const dispatch = useDispatch();
@@ -37,7 +38,12 @@ function Basket() {
     <div>
       <Toaster position="top-center" reverseOrder={false} />
       {basketItems.length === 0 ? (
-        <div className="text-[18px] font-bold">Корзина пуста.</div>
+        <div className="flex flex-col justify-center items-center text-[18px] font-bold h-[10rem] border-[2px] rounded-[8px]">
+          <span>
+            <AiOutlineInbox size={32} />
+          </span>
+          Корзина пуста.
+        </div>
       ) : (
         <>
           <div className="grid grid-cols-2 py-8 gap-8">
