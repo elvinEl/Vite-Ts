@@ -58,3 +58,10 @@ export interface PriceFilterType {
   setSelectedCategory: (value: string) => void;
   categories: { name: string }[];
 }
+interface CurrencyRate {
+  value: number;
+}
+
+export interface CurrencyRates {
+  [key: string]: CurrencyRate;
+}
