@@ -67,11 +67,10 @@ function Menu() {
                     {category.subcategories.map((subcategory, subIndex) => (
                       <NavLink
                         onClick={() => handleSelectCategory(subcategory)}
-                        to={`category/${subcategory}`}
+                        to={`all-products/${subcategory}`}
                         className="px-6 w-full py-2 hover:bg-gray-100 cursor-pointer"
                         key={subIndex}
                       >
-                        
                         {subcategory}
                       </NavLink>
                     ))}

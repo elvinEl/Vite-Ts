@@ -5,11 +5,13 @@ import { TopProductsType } from "../../types/Types";
 import { addBasket } from "../../redux/basketSlice";
 import { useDispatch } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
-import Button from "../button/Button";
+import Button from "../../components/button/Button";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
 
 function DetailProducts() {
-  const allProducts = productData.categories.flatMap(category => category.items);
+  const allProducts = productData.categories.flatMap(
+    (category) => category.items
+  );
   const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
   const product = allProducts.find(

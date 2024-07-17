@@ -49,3 +49,12 @@ export interface CategoryData {
 export interface CategoryInitialState {
   selectedCategory: string | null;
 }
+export interface PriceFilterType {
+  minCount: string;
+  setMinCount: (value: string) => void;
+  maxCount: string;
+  setMaxCount: (value: string) => void;
+  selectedCategory: string;
+  setSelectedCategory: (value: string) => void;
+  categories: { name: string }[];
+}

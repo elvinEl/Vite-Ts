@@ -1,12 +1,12 @@
 import data from "../../mocks/topProductsData.json";
 import { NavLink } from "react-router-dom";
-import Button from "../button/Button";
+import Button from "../../components/button/Button";
 import { useDispatch } from "react-redux";
 import { TopProductsType } from "../../types/Types";
-import { handleAddBasket } from "../utilities/handleBasket";
+import { handleAddBasket } from "../../components/utilities/handleBasket";
 import { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
-import Input from "../input/Input";
+import PriceFilter from "../../components/utilities/PriceFilter";
 
 function AllProducts() {
   const allProducts = data.categories.flatMap((category) => category.items);
@@ -17,56 +17,36 @@ function AllProducts() {
   const [filteredData, setFilteredData] =
     useState<TopProductsType[]>(allProducts);
 
-    useEffect(() => {
-      const minPrice = parseFloat(minCount) || 0;
-      const maxPrice = parseFloat(maxCount) || Infinity;
-  
-      const filtered = allProducts.filter((item) => {
-        const isInCategory = selectedCategory
-          ? data.categories.some((category) =>
-              category.items.some((prod) => prod.id === item.id && category.name === selectedCategory)
+  useEffect(() => {
+    const minPrice = parseFloat(minCount) || 0;
+    const maxPrice = parseFloat(maxCount) || Infinity;
+
+    const filtered = allProducts.filter((item) => {
+      const isInCategory = selectedCategory
+        ? data.categories.some((category) =>
+            category.items.some(
+              (prod) =>
+                prod.id === item.id && category.name === selectedCategory
             )
-          : true;
-        return isInCategory && item.price >= minPrice && item.price <= maxPrice;
-      });
-  
-      setFilteredData(filtered);
-    }, [minCount, maxCount, selectedCategory]);
+          )
+        : true;
+      return isInCategory && item.price >= minPrice && item.price <= maxPrice;
+    });
+
+    setFilteredData(filtered);
+  }, [minCount, maxCount, selectedCategory]);
   return (
     <>
-      <div className="flex gap-4 bg-[#FAFAFA] border-[1px] border-gray-300 p-4">
-        <select
-          className="outline-none px-3 py-1 border-[1px]"
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-        >
-          <option value="" key="">
-            All categories
-          </option>
-          {data.categories.map((category, index) => (
-            <option value={category.name} key={index}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-        <Input
-          value={minCount}
-          onChange={(e) => setMinCount(e.target.value)}
-          className="border-[1px] outline-none px-2"
-          type="number"
-          placeholder="min"
-        />
-        <Input
-          value={maxCount}
-          onChange={(e) => setMaxCount(e.target.value)}
-          className="border-[1px] outline-none px-2"
-          type="number"
-          placeholder="max"
-        />
-      </div>
-
+      <PriceFilter
+        minCount={minCount}
+        setMinCount={setMinCount}
+        maxCount={maxCount}
+        setMaxCount={setMaxCount}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        categories={data.categories}
+      />
       <Toaster position="top-center" reverseOrder={false} />
-
       {filteredData.length !== 0 ? (
         <div className="grid grid-cols-5 gap-6 py-4">
           {filteredData.map((product: TopProductsType) => (
