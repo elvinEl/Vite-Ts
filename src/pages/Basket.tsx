@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { TopProductsType } from "../types/Types";
+import { TopProductsType, CurrencyRates } from "../types/Types";
 import {
   deleteBasket,
   incrementQuantity,
@@ -11,18 +11,29 @@ import toast, { Toaster } from "react-hot-toast";
 import { NavLink } from "react-router-dom";
 import Button from "../components/button/Button";
 import { AiOutlineInbox } from "react-icons/ai";
+import useConvertCurrency from "../components/utilities/convertCurrency";
 
 function Basket() {
   const dispatch = useDispatch();
   const basketItems = useSelector((state: RootState) => state.basket.basket);
   const theme = useSelector((state: RootState) => state.theme.colorScheme);
 
+  const currencyRates: CurrencyRates = useConvertCurrency();
+  const selectedCurrency = useSelector(
+    (state: RootState) => state.currency.selectedCurrency
+  );
+  const convertPrice = (price: number) => {
+    if (currencyRates[selectedCurrency]) {
+      return (price / currencyRates[selectedCurrency].value).toFixed(0);
+    }
+    return price;
+  };
   const calculateTotalPrice = () => {
     let totalPrice: number = 0;
     basketItems.forEach((item: TopProductsType) => {
       totalPrice += item.price * item.quantity;
     });
-    return totalPrice;
+    return convertPrice(totalPrice);
   };
   const handleDeleteItem = (id: number) => {
     dispatch(deleteBasket(id));
@@ -57,7 +68,8 @@ function Basket() {
                   />
                 </NavLink>
                 <div>
-                  {item.title} - {item.price}₽ x {item.quantity}
+                  {item.title} - {item.price}
+                  {selectedCurrency} x {item.quantity}
                   <div className="flex gap-2">
                     <Button
                       onClick={() => handleIncrementPrice(item.id)}
@@ -88,7 +100,8 @@ function Basket() {
             ))}
           </div>
           <p className="font-medium text-[24px]">
-            Общие цены:{calculateTotalPrice()}₽
+            Общие цены:{calculateTotalPrice()}
+            {selectedCurrency}
           </p>
         </>
       )}

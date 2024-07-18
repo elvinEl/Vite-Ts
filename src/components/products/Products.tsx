@@ -21,8 +21,9 @@ function TopProducts() {
     chairs.slice(0, 10)
   );
   const [selectedFilter, setSelectedFilter] = useState("");
-  const [selectedCurrency, setSelectedCurrency] = useState("USD");
-
+  const selectedCurrency = useSelector(
+    (state: RootState) => state.currency.selectedCurrency
+  );
   const handleFilter = (filterValue: string) => {
     setSelectedFilter(filterValue);
     const sortedProducts = [...products].sort((a, b) =>
@@ -33,7 +34,7 @@ function TopProducts() {
 
   const convertPrice = (price: number) => {
     if (currencyRates[selectedCurrency]) {
-      return (price / currencyRates[selectedCurrency].value).toFixed(2);
+      return (price / currencyRates[selectedCurrency].value).toFixed(0);
     }
     return price;
   };
@@ -44,17 +45,6 @@ function TopProducts() {
       <div className="flex justify-between items-center">
         <p className="text-[30px] font-medium">Недавние объявления</p>
         <div className="flex gap-8">
-          <select
-            className="outline-none"
-            onChange={(e) => setSelectedCurrency(e.target.value)}
-            value={selectedCurrency}
-          >
-            {Object.entries(currencyRates).map((currency) => (
-              <option key={currency[0]} value={currency[0]}>
-                {currency[0]}
-              </option>
-            ))}
-          </select>
           <select
             className={`border-[1px] outline-none p-1 ${
               theme === "dark" ? "bg-black" : ""

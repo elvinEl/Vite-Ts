@@ -1,22 +1,35 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import productData from "../../mocks/topProductsData.json";
-import { TopProductsType } from "../../types/Types";
+import { TopProductsType, CurrencyRates } from "../../types/Types";
 import { addBasket } from "../../redux/basketSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import Button from "../../components/button/Button";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
-
+import useConvertCurrency from "../../components/utilities/convertCurrency";
+import { RootState } from "../../redux/store";
 function DetailProducts() {
+  const dispatch = useDispatch();
   const allProducts = productData.categories.flatMap(
     (category) => category.items
   );
-  const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
   const product = allProducts.find(
     (product: TopProductsType) => product.id.toString() === id
   );
+
+  const currencyRates: CurrencyRates = useConvertCurrency();
+  const selectedCurrency = useSelector(
+    (state: RootState) => state.currency.selectedCurrency
+  );
+  const convertPrice = (price: number) => {
+    if (currencyRates[selectedCurrency]) {
+      return (price / currencyRates[selectedCurrency].value).toFixed(0);
+    }
+    return price;
+  };
+
   const [selectedImg, setSelectedImg] = useState(product?.img[0]);
   const handleAddBasket = (product: TopProductsType) => {
     dispatch(addBasket(product));
@@ -76,7 +89,7 @@ function DetailProducts() {
           <div>
             <p className="text-4xl font-bold mb-4">{product?.title}</p>
             <p className="text-3xl font-semibold text-blue-600 mb-4">
-              {product?.price}₽
+              {convertPrice(product.price)} {selectedCurrency}
             </p>
             <Button
               onClick={() => handleAddBasket(product)}

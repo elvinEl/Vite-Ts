@@ -1,16 +1,27 @@
 import data from "../../mocks/topProductsData.json";
 import { NavLink } from "react-router-dom";
 import Button from "../../components/button/Button";
-import { useDispatch } from "react-redux";
-import { TopProductsType } from "../../types/Types";
+import { useDispatch, useSelector } from "react-redux";
+import { TopProductsType, CurrencyRates } from "../../types/Types";
 import { handleAddBasket } from "../../components/utilities/handleBasket";
 import { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import PriceFilter from "../../components/utilities/PriceFilter";
-
+import useConvertCurrency from "../../components/utilities/convertCurrency";
+import { RootState } from "../../redux/store";
 function AllProducts() {
-  const allProducts = data.categories.flatMap((category) => category.items);
   const dispatch = useDispatch();
+  const currencyRates: CurrencyRates = useConvertCurrency();
+  const selectedCurrency = useSelector(
+    (state: RootState) => state.currency.selectedCurrency
+  );
+  const convertPrice = (price: number) => {
+    if (currencyRates[selectedCurrency]) {
+      return (price / currencyRates[selectedCurrency].value).toFixed(0);
+    }
+    return price;
+  };
+  const allProducts = data.categories.flatMap((category) => category.items);
   const [maxCount, setMaxCount] = useState<string>("");
   const [minCount, setMinCount] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
@@ -59,7 +70,10 @@ function AllProducts() {
               </NavLink>
               <p className="font-bold flex gap-1 mt-2">
                 Цена:
-                <span className="font-normal">{product.price}₽</span>
+                <span className="font-normal">
+                  {" "}
+                  {convertPrice(product.price)} {selectedCurrency}
+                </span>
               </p>
               <p className="text-[14px] mt-2 line-clamp-2">{product.title}</p>
               <Button

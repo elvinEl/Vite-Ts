@@ -7,6 +7,8 @@ import { handleAddBasket } from "../components/utilities/handleBasket";
 import { Toaster } from "react-hot-toast";
 import PriceFilter from "../components/utilities/PriceFilter";
 import { useState } from "react";
+import useConvertCurrency from "../components/utilities/convertCurrency";
+import { CurrencyRates } from "../types/Types";
 function Category() {
   const dispatch = useDispatch();
   const categoryName = useSelector(
@@ -15,10 +17,21 @@ function Category() {
   const selectedCategory = products.categories.find(
     (category) => category.name === categoryName
   );
+  const currencyRates: CurrencyRates = useConvertCurrency();
+  const selectedCurrency = useSelector(
+    (state: RootState) => state.currency.selectedCurrency
+  );
+  const convertPrice = (price: number) => {
+    if (currencyRates[selectedCurrency]) {
+      return (price / currencyRates[selectedCurrency].value).toFixed(0);
+    }
+    return price;
+  };
   const [maxCount, setMaxCount] = useState<string>("");
   const [minCount, setMinCount] = useState<string>("");
-  const [selectedCategoryName, setSelectedCategoryName] =
-    useState<string>(categoryName || "");
+  const [selectedCategoryName, setSelectedCategoryName] = useState<string>(
+    categoryName || ""
+  );
   const filteredItems = selectedCategory
     ? selectedCategory.items.filter((item) => {
         const minPrice = parseFloat(minCount) || 0;
@@ -55,7 +68,7 @@ function Category() {
                 </NavLink>
                 <p className="font-bold flex gap-1 mt-2">
                   Цена:
-                  <span className="font-normal">{product.price}₽</span>
+                  <span className="font-normal"> {convertPrice(product.price)} {selectedCurrency}</span>
                 </p>
                 <p className="text-[14px] mt-2 line-clamp-2">{product.title}</p>
                 <Button
