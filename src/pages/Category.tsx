@@ -6,17 +6,30 @@ import Button from "../components/button/Button";
 import { handleAddBasket } from "../components/utilities/handleBasket";
 import { Toaster } from "react-hot-toast";
 import PriceFilter from "../components/utilities/PriceFilter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useConvertCurrency from "../components/utilities/convertCurrency";
-import { CurrencyRates } from "../types/Types";
+import { CurrencyRates, TopProductsType } from "../types/Types";
+import axios from "axios";
+import { renderStars } from "../components/utilities/renderStars";
 function Category() {
   const dispatch = useDispatch();
   const categoryName = useSelector(
     (state: RootState) => state.category.selectedCategory
   );
-  const selectedCategory = products.categories.find(
-    (category) => category.name === categoryName
+  const [selectedCategory, setSelectedCategory] = useState<TopProductsType[]>(
+    []
   );
+  const fetchCategoryItems = async () => {
+    const response = await axios.get(
+      `https://fakestoreapi.com/products/category/${categoryName}`
+    );
+    console.log(response.data);
+
+    setSelectedCategory(response.data);
+  };
+  useEffect(() => {
+    fetchCategoryItems();
+  }, [categoryName]);
   const currencyRates: CurrencyRates = useConvertCurrency();
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.selectedCurrency
@@ -33,7 +46,7 @@ function Category() {
     categoryName || ""
   );
   const filteredItems = selectedCategory
-    ? selectedCategory.items.filter((item) => {
+    ? selectedCategory.filter((item) => {
         const minPrice = parseFloat(minCount) || 0;
         const maxPrice = parseFloat(maxCount) || Infinity;
         return item.price >= minPrice && item.price <= maxPrice;
@@ -58,25 +71,49 @@ function Category() {
         <Toaster position="top-center" reverseOrder={false} />
 
         {filteredItems
-          ? filteredItems.map((product) => (
-              <div key={product.id} className="col-span-1 product-card">
+          ? filteredItems.map((product: TopProductsType) => (
+              <div
+                key={product.id}
+                className="col-span-1 product-card flex flex-col justify-between"
+              >
                 <NavLink
                   to={`/detail/${product.id}`}
                   className="flex justify-center"
                 >
-                  <img className="h-[200px]" src={product.img[0]} alt="" />
+                  <img
+                    className="h-[200px]"
+                    src={product.image}
+                    alt={product.title}
+                  />
                 </NavLink>
                 <p className="font-bold flex gap-1 mt-2">
                   Цена:
-                  <span className="font-normal"> {convertPrice(product.price)} {selectedCurrency}</span>
+                  <span className="font-normal">
+                    {convertPrice(product.price)} {selectedCurrency}
+                  </span>
                 </p>
-                <p className="text-[14px] mt-2 line-clamp-2">{product.title}</p>
-                <Button
-                  onClick={() => handleAddBasket(dispatch, product)}
-                  className="px-5 py-2 mt-2 rounded-sm hover:bg-blue-800 duration-200 bg-[#365EDC]  uppercase text-white text-[14px]"
-                >
-                  {product.btnText}
-                </Button>
+                <p className="text-[14px] mt-2 line-clamp-2 ">
+                  Category :
+                  <span className="uppercase font-bold">
+                    {" "}
+                    {product.category}
+                  </span>{" "}
+                </p>
+                <p className="text-[14px]  line-clamp-2">{product.title}</p>
+                <p className="text-[14px] line-clamp-2 flex items-center gap-1">
+                  {product.rating.rate}
+                  <span className="flex">
+                    {renderStars(product.rating.rate)}
+                  </span>
+                </p>
+                <div>
+                  <Button
+                    onClick={() => handleAddBasket(dispatch, product)}
+                    className="px-5 py-2 mt-2 rounded-sm hover:bg-[#ca9334] bg-[#E6A128] duration-200  uppercase text-white text-[14px]"
+                  >
+                    Add Basket
+                  </Button>
+                </div>
               </div>
             ))
           : "Товар не найден"}

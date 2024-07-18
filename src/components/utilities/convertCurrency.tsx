@@ -10,8 +10,8 @@ function useConvertCurrency() {
         "https://api.currencyapi.com/v3/latest?apikey=Xjn91xfaYM2vpbwfYG4KcgZhmmzgQsODVj2ieZWu&currencies=EUR%2CUSD%2CCAD"
       );
       setCurrencyRates(response.data.data);
-    } catch (e) {
-      console.error("Error fetching data", e);
+    } catch (e: any) {
+      console.error("Error fetching data", e.response.data.message);
     }
   };
 

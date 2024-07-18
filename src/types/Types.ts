@@ -3,11 +3,17 @@ export interface basketInitialState {
 }
 export interface TopProductsType {
   id: number;
-  img: string[];
+  category: string;
+  description: string;
+  rating: Rating;
+  image: string;
   price: number;
   title: string;
-  btnText: string;
   quantity: number;
+}
+interface Rating {
+  rate: number;
+  count: number;
 }
 export interface SwiperType {
   id: number;

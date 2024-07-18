@@ -1,19 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import Button from "../button/Button";
-import categoriesData from "../../mocks/menuData.json";
 import { NavLink } from "react-router-dom";
-import { CategoryData } from "../../types/Types";
 import { FaAngleRight } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setSelectedCategory } from "../../redux/categorySlice";
+import axios from "axios";
+
 function Menu() {
   const dispatch = useDispatch();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [openCategoryIndex, setOpenCategoryIndex] = useState<number | null>(
     null
   );
-  const categories: CategoryData = categoriesData;
+  const [categories, setCategories] = useState<string[]>([]);
 
   const toggleMenu = () => {
     setIsOpenMenu(!isOpenMenu);
@@ -31,6 +31,21 @@ function Menu() {
     dispatch(setSelectedCategory(categoryName));
     setIsOpenMenu(false);
   };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          "https://fakestoreapi.com/products/categories"
+        );
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   return (
     <div className="relative">
@@ -53,27 +68,24 @@ function Menu() {
       {isOpenMenu && (
         <div className="absolute mt-4 w-full rounded-md shadow-lg z-10">
           <ul className="bg-white w-60 border-[1px]">
-            {categories.categories.map((category, index) => (
+            {categories.map((category, index) => (
               <li
                 key={index}
                 className="px-4 flex justify-between items-center py-2 hover:bg-gray-100 cursor-pointer relative"
                 onMouseEnter={() => handleCategoryHover(index)}
                 onMouseLeave={handleCategoryLeave}
               >
-                {category.name}
+                {category}
                 <FaAngleRight />
                 {openCategoryIndex === index && (
-                  <div className="absolute flex flex-col left-full top-0  bg-white shadow-lg z-10">
-                    {category.subcategories.map((subcategory, subIndex) => (
-                      <NavLink
-                        onClick={() => handleSelectCategory(subcategory)}
-                        to={`all-products/${subcategory}`}
-                        className="px-6 w-full py-2 hover:bg-gray-100 cursor-pointer"
-                        key={subIndex}
-                      >
-                        {subcategory}
-                      </NavLink>
-                    ))}
+                  <div className="absolute w-full flex flex-col left-full top-0 bg-white shadow-lg z-10">
+                    <NavLink
+                      onClick={() => handleSelectCategory(category)}
+                      to={`all-products/${category}`}
+                      className="px-6 w-full py-2 hover:bg-gray-100 cursor-pointer"
+                    >
+                      {category}
+                    </NavLink>
                   </div>
                 )}
               </li>

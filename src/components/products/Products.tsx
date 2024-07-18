@@ -1,29 +1,37 @@
-import data from "../../mocks/topProductsData.json";
-import { TopProductsType, CurrencyRates } from "../../types/Types";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Toaster } from "react-hot-toast";
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
-import Button from "../button/Button";
-import { RootState } from "../../redux/store";
+import { Toaster } from "react-hot-toast";
 import { FaChevronRight } from "react-icons/fa";
+import axios from "axios";
+import Button from "../button/Button";
+import { TopProductsType, CurrencyRates } from "../../types/Types";
+import { RootState } from "../../redux/store";
 import { handleAddBasket } from "../utilities/handleBasket";
 import useConvertCurrency from "../utilities/convertCurrency";
-
+import { renderStars } from "../utilities/renderStars";
 function TopProducts() {
   const dispatch = useDispatch();
   const theme = useSelector((state: RootState) => state.theme.colorScheme);
   const currencyRates: CurrencyRates = useConvertCurrency();
-
-  const chairs =
-    data.categories.find((category) => category.name === "chairs")?.items ?? [];
-  const [products, setProducts] = useState<TopProductsType[]>(
-    chairs.slice(0, 10)
-  );
-  const [selectedFilter, setSelectedFilter] = useState("");
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.selectedCurrency
   );
+  const [products, setProducts] = useState<TopProductsType[]>([]);
+  const [selectedFilter, setSelectedFilter] = useState("");
+
+  const getProducts = async () => {
+    try {
+      const response = await axios.get("https://fakestoreapi.com/products");
+      setProducts(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   const handleFilter = (filterValue: string) => {
     setSelectedFilter(filterValue);
     const sortedProducts = [...products].sort((a, b) =>
@@ -71,7 +79,7 @@ function TopProducts() {
         </div>
       </div>
       <div className="grid grid-cols-5 gap-5 py-4 max-2xl:grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
-        {products.map((product: TopProductsType) => (
+        {products.slice(0, 10).map((product: TopProductsType) => (
           <div
             key={product.id}
             className="col-span-1 product-card flex flex-col justify-between"
@@ -80,7 +88,11 @@ function TopProducts() {
               to={`/detail/${product.id}`}
               className="flex justify-center"
             >
-              <img className="h-[200px]" src={product.img[0]} alt="" />
+              <img
+                className="h-[200px]"
+                src={product.image}
+                alt={product.title}
+              />
             </NavLink>
             <p className="font-bold flex gap-1 mt-2">
               Цена:
@@ -88,13 +100,21 @@ function TopProducts() {
                 {convertPrice(product.price)} {selectedCurrency}
               </span>
             </p>
-            <p className="text-[14px] mt-2 line-clamp-2">{product.title}</p>
+            <p className="text-[14px] mt-2 line-clamp-2 ">
+              Category :
+              <span className="uppercase font-bold"> {product.category}</span>{" "}
+            </p>
+            <p className="text-[14px]  line-clamp-2">{product.title}</p>
+            <p className="text-[14px] line-clamp-2 flex items-center gap-1">
+              {product.rating.rate}
+              <span className="flex">{renderStars(product.rating.rate)}</span>
+            </p>
             <div>
               <Button
                 onClick={() => handleAddBasket(dispatch, product)}
-                className="px-5 py-2 mt-2 rounded-sm hover:bg-[#ca9334] duration-200 bg-[#E6A128] uppercase text-white text-[14px]"
+                className="px-5 py-2 mt-2 rounded-sm hover:bg-[#ca9334] bg-[#E6A128] duration-200  uppercase text-white text-[14px]"
               >
-                {product.btnText}
+                Add Basket
               </Button>
             </div>
           </div>
