@@ -3,7 +3,7 @@ import Search from "./Search";
 import Menu from "./Menu";
 import { CgProfile } from "react-icons/cg";
 import { SlBasket } from "react-icons/sl";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import Theme from "../theme/Theme";
 // import { setCurrency } from "../../redux/currencySlice";
