@@ -10,6 +10,8 @@ import { RootState } from "../../redux/store";
 import { handleAddBasket } from "../utilities/handleBasket";
 import useConvertCurrency from "../utilities/convertCurrency";
 import { renderStars } from "../utilities/renderStars";
+import Skeleton from "../skeleton/Skeleton";
+
 function TopProducts() {
   const dispatch = useDispatch();
   const theme = useSelector((state: RootState) => state.theme.colorScheme);
@@ -19,6 +21,7 @@ function TopProducts() {
   );
   const [products, setProducts] = useState<TopProductsType[]>([]);
   const [selectedFilter, setSelectedFilter] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const getProducts = async () => {
     try {
@@ -26,6 +29,8 @@ function TopProducts() {
       setProducts(response.data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false); 
     }
   };
   useEffect(() => {
@@ -79,46 +84,67 @@ function TopProducts() {
         </div>
       </div>
       <div className="grid grid-cols-5 gap-5 py-4 max-2xl:grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
-        {products.slice(0, 10).map((product: TopProductsType) => (
-          <div
-            key={product.id}
-            className="col-span-1 product-card flex flex-col justify-between"
-          >
-            <NavLink
-              to={`/detail/${product.id}`}
-              className="flex justify-center"
-            >
-              <img
-                className="h-[200px]"
-                src={product.image}
-                alt={product.title}
-              />
-            </NavLink>
-            <p className="font-bold flex gap-1 mt-2">
-              Цена:
-              <span className="font-normal">
-                {convertPrice(product.price)} {selectedCurrency}
-              </span>
-            </p>
-            <p className="text-[14px] mt-2 line-clamp-2 ">
-              Category :
-              <span className="uppercase font-bold"> {product.category}</span>{" "}
-            </p>
-            <p className="text-[14px]  line-clamp-2">{product.title}</p>
-            <p className="text-[14px] line-clamp-2 flex items-center gap-1">
-              {product.rating.rate}
-              <span className="flex">{renderStars(product.rating.rate)}</span>
-            </p>
-            <div>
-              <Button
-                onClick={() => handleAddBasket(dispatch, product)}
-                className="px-5 py-2 mt-2 rounded-sm hover:bg-[#ca9334] bg-[#E6A128] duration-200  uppercase text-white text-[14px]"
+        {loading
+          ?
+            Array.from({ length: 10 }).map((_, index) => (
+              <div
+                key={index}
+                className="col-span-1 product-card flex flex-col justify-between"
               >
-                Add Basket
-              </Button>
-            </div>
-          </div>
-        ))}
+                <Skeleton type="image" />
+                <Skeleton type="title" />
+                <Skeleton type="price" />
+                <Skeleton type="category" />
+                <Skeleton type="rating" />
+                <Skeleton type="button" />
+              </div>
+            ))
+          :
+            products.slice(0, 10).map((product: TopProductsType) => (
+              <div
+                key={product.id}
+                className="col-span-1 product-card flex flex-col justify-between"
+              >
+                <NavLink
+                  to={`/detail/${product.id}`}
+                  className="flex justify-center"
+                >
+                  <img
+                    className="h-[200px]"
+                    src={product.image}
+                    alt={product.title}
+                  />
+                </NavLink>
+                <p className="font-bold flex gap-1 mt-2">
+                  Цена:
+                  <span className="font-normal">
+                    {convertPrice(product.price)} {selectedCurrency}
+                  </span>
+                </p>
+                <p className="text-[14px] mt-2 line-clamp-2 ">
+                  Category :
+                  <span className="uppercase font-bold">
+                    {" "}
+                    {product.category}
+                  </span>
+                </p>
+                <p className="text-[14px]  line-clamp-2">{product.title}</p>
+                <p className="text-[14px] line-clamp-2 flex items-center gap-1">
+                  {product.rating.rate}
+                  <span className="flex">
+                    {renderStars(product.rating.rate)}
+                  </span>
+                </p>
+                <div>
+                  <Button
+                    onClick={() => handleAddBasket(dispatch, product)}
+                    className="px-5 py-2 mt-2 rounded-sm hover:bg-[#ca9334] bg-[#E6A128] duration-200  uppercase text-white text-[14px]"
+                  >
+                    Add Basket
+                  </Button>
+                </div>
+              </div>
+            ))}
       </div>
     </div>
   );
