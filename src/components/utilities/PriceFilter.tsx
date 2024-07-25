@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { PriceFilterType } from "../../types/Types";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 const PriceFilter: React.FC<PriceFilterType> = ({
   minCount,
   setMinCount,
@@ -12,9 +13,14 @@ const PriceFilter: React.FC<PriceFilterType> = ({
 }) => {
   const location = useLocation();
   const isProductSlug = location.pathname.startsWith("/all-products/");
+  const theme = useSelector((state: RootState) => state.theme.colorScheme);
 
   return (
-    <div className="flex gap-4 bg-[#FAFAFA] border-[1px] border-gray-300 p-4">
+    <div
+      className={`flex gap-4 bg-[#FAFAFA] border-[2px] border-[#E6A128] p-4 ${
+        theme === "dark" ? "bg-[#121212]" : ""
+      }`}
+    >
       {!isProductSlug && (
         <select
           className="outline-none px-3 py-1 border-[1px]"
@@ -32,7 +38,7 @@ const PriceFilter: React.FC<PriceFilterType> = ({
       <input
         value={minCount}
         onChange={(e) => setMinCount(e.target.value)}
-        className="border-[1px] outline-none px-2"
+        className="border-[1px] outline-none px-2 "
         type="number"
         placeholder="min"
       />

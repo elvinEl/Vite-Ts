@@ -67,7 +67,7 @@ function Menu() {
 
       {isOpenMenu && (
         <div className="absolute mt-4 w-full rounded-md shadow-lg z-10">
-          <ul className="bg-white w-60 border-[1px]">
+          <ul className="bg-white w-60 border-[1px] text-black">
             {categories.map((category, index) => (
               <li
                 key={index}

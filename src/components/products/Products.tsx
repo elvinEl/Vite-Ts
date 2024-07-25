@@ -30,7 +30,7 @@ function TopProducts() {
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -74,7 +74,9 @@ function TopProducts() {
           </select>
           <NavLink
             to="/all-products"
-            className="flex items-center gap-1 hover:bg-gray-100 duration-200 rounded-[12px] px-3 py-1"
+            className={`flex items-center gap-1 hover:bg-gray-100 duration-200 rounded-[12px] px-3 py-1 ${
+              theme === "dark" ? "hover:text-black" : ""
+            }`}
           >
             Увидеть все
             <span>
@@ -85,8 +87,7 @@ function TopProducts() {
       </div>
       <div className="grid grid-cols-5 gap-5 py-4 max-2xl:grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
         {loading
-          ?
-            Array.from({ length: 10 }).map((_, index) => (
+          ? Array.from({ length: 10 }).map((_, index) => (
               <div
                 key={index}
                 className="col-span-1 product-card flex flex-col justify-between"
@@ -99,8 +100,7 @@ function TopProducts() {
                 <Skeleton type="button" />
               </div>
             ))
-          :
-            products.slice(0, 10).map((product: TopProductsType) => (
+          : products.slice(0, 10).map((product: TopProductsType) => (
               <div
                 key={product.id}
                 className="col-span-1 product-card flex flex-col justify-between"
