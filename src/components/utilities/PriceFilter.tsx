@@ -38,14 +38,14 @@ const PriceFilter: React.FC<PriceFilterType> = ({
       <input
         value={minCount}
         onChange={(e) => setMinCount(e.target.value)}
-        className="border-[1px] outline-none px-2 "
+        className="border-[1px] outline-none px-1 text-black"
         type="number"
         placeholder="min"
       />
       <input
         value={maxCount}
         onChange={(e) => setMaxCount(e.target.value)}
-        className="border-[1px] outline-none px-2"
+        className="border-[1px] outline-none px-1 text-black"
         type="number"
         placeholder="max"
       />

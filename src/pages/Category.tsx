@@ -11,6 +11,7 @@ import useConvertCurrency from "../components/utilities/convertCurrency";
 import { CurrencyRates, TopProductsType } from "../types/Types";
 import axios from "axios";
 import { renderStars } from "../components/utilities/renderStars";
+import Skeleton from "../components/skeleton/Skeleton";
 function Category() {
   const dispatch = useDispatch();
   const categoryName = useSelector(
@@ -19,42 +20,49 @@ function Category() {
   const [selectedCategory, setSelectedCategory] = useState<TopProductsType[]>(
     []
   );
-  const fetchCategoryItems = async () => {
-    const response = await axios.get(
-      `https://fakestoreapi.com/products/category/${categoryName}`
-    );
-    console.log(response.data);
+  const [loading, setLoading] = useState(true);
 
-    setSelectedCategory(response.data);
+  const fetchCategoryItems = async () => {
+    try {
+      const response = await axios.get(
+        `https://fakestoreapi.com/products/category/${categoryName}`
+      );
+
+      setSelectedCategory(response.data);
+    } catch (error) {
+      console.error("Failed to fetch data", error);
+    } finally {
+      setLoading(false);
+    }
   };
+
   useEffect(() => {
     fetchCategoryItems();
   }, [categoryName]);
+
   const currencyRates: CurrencyRates = useConvertCurrency();
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.selectedCurrency
   );
+
   const convertPrice = (price: number) => {
     if (currencyRates[selectedCurrency]) {
       return (price / currencyRates[selectedCurrency].value).toFixed(0);
     }
     return price;
   };
+
   const [maxCount, setMaxCount] = useState<string>("");
   const [minCount, setMinCount] = useState<string>("");
   const [selectedCategoryName, setSelectedCategoryName] = useState<string>(
     categoryName || ""
   );
-  const filteredItems = selectedCategory
-    ? selectedCategory.filter((item) => {
-        const minPrice = parseFloat(minCount) || 0;
-        const maxPrice = parseFloat(maxCount) || Infinity;
-        return item.price >= minPrice && item.price <= maxPrice;
-      })
-    : [];
-  if (!selectedCategory) {
-    return <p>Категория не найдена</p>;
-  }
+
+  const filteredItems = selectedCategory.filter((item) => {
+    const minPrice = parseFloat(minCount) || 0;
+    const maxPrice = parseFloat(maxCount) || Infinity;
+    return item.price >= minPrice && item.price <= maxPrice;
+  });
 
   return (
     <div>
@@ -70,8 +78,21 @@ function Category() {
       <div className="grid grid-cols-5 gap-5 py-4 max-2xl:grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
         <Toaster position="top-center" reverseOrder={false} />
 
-        {filteredItems
-          ? filteredItems.map((product: TopProductsType) => (
+        {loading
+          ? Array.from({ length: 10 }).map((_, index) => (
+              <div
+                key={index}
+                className="col-span-1 product-card flex flex-col justify-between"
+              >
+                <Skeleton type="image" />
+                <Skeleton type="title" />
+                <Skeleton type="price" />
+                <Skeleton type="category" />
+                <Skeleton type="rating" />
+                <Skeleton type="button" />
+              </div>
+            ))
+          : filteredItems.map((product: TopProductsType) => (
               <div
                 key={product.id}
                 className="col-span-1 product-card flex flex-col justify-between"
@@ -115,8 +136,7 @@ function Category() {
                   </Button>
                 </div>
               </div>
-            ))
-          : "Товар не найден"}
+            ))}
       </div>
     </div>
   );

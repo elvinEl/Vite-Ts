@@ -9,19 +9,25 @@ import { RootState } from "../../redux/store";
 import { handleAddBasket } from "../../components/utilities/handleBasket";
 import useConvertCurrency from "../../components/utilities/convertCurrency";
 import { renderStars } from "../../components/utilities/renderStars";
+import Skeleton from "../../components/skeleton/Skeleton";
+
 function AllProducts() {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
   const currencyRates: CurrencyRates = useConvertCurrency();
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.selectedCurrency
   );
+
   const convertPrice = (price: number) => {
     if (currencyRates[selectedCurrency]) {
       return (price / currencyRates[selectedCurrency].value).toFixed(0);
     }
     return price;
   };
+
   const [filteredData, setFilteredData] = useState<TopProductsType[]>([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,6 +35,8 @@ function AllProducts() {
         setFilteredData(response.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
@@ -37,7 +45,23 @@ function AllProducts() {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-      {filteredData.length !== 0 ? (
+      {loading ? (
+        <div className="grid grid-cols-5 gap-6 py-4">
+          {Array.from({ length: 10 }).map((_, index) => (
+            <div
+              key={index}
+              className="col-span-1 product-card flex flex-col justify-between"
+            >
+              <Skeleton type="image" />
+              <Skeleton type="title" />
+              <Skeleton type="price" />
+              <Skeleton type="category" />
+              <Skeleton type="rating" />
+              <Skeleton type="button" />
+            </div>
+          ))}
+        </div>
+      ) : filteredData.length !== 0 ? (
         <div className="grid grid-cols-5 gap-6 py-4">
           {filteredData.map((product: TopProductsType) => (
             <div

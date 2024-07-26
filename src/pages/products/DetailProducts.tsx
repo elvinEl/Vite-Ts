@@ -10,9 +10,11 @@ import useConvertCurrency from "../../components/utilities/convertCurrency";
 import { RootState } from "../../redux/store";
 import axios from "axios";
 import { renderStars } from "../../components/utilities/renderStars";
+import Skeleton from "../../components/skeleton/Skeleton";
 function DetailProducts() {
   const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
+  const [loading, setLoading] = useState(true);
   const currencyRates: CurrencyRates = useConvertCurrency();
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.selectedCurrency
@@ -32,6 +34,8 @@ function DetailProducts() {
       setProduct(response.data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -41,26 +45,8 @@ function DetailProducts() {
     dispatch(addBasket(product));
     toast.success("Товар добавлен в корзину");
   };
-  if (!product) {
-    return <div>Товар не найден</div>;
-  }
-  // const [selectedImg, setSelectedImg] = useState(product?.image);
-  // const handleNextImage = () => {
-  //   const currentIndex = product.image.indexOf(selectedImg || "") || 0;
-  //   const nextIndex = (currentIndex + 1) % product.image.length;
-  //   setSelectedImg(product?.image[nextIndex]);
-  // };
-  // const handlePrevImage = () => {
-  //   const currentIndex = product.image.indexOf(selectedImg || "") || 0;
-  //   const prevIndex =
-  //     (currentIndex - 1 + product.image.length) % product.image.length;
-  //   setSelectedImg(product?.image[prevIndex]);
-  // };
-  return (
-    <div className="container mx-auto p-8">
-      <Toaster position="top-center" reverseOrder={false} />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* <div>
+  {
+    /* <div>
           <div className="relative image-card">
             <image
               className="w-full rounded-lg shadow-lg h-[600px]"
@@ -90,35 +76,61 @@ function DetailProducts() {
               />
             ))}
           </div>
-        </div> */}
-        <div>
-          <img
-            className=" rounded-lg shadow-lg h-[600px]"
-            src={product.image}
-          />
-        </div>
-        <div className="flex flex-col justify-between">
+        </div> */
+  }
+  return (
+    <div className="container mx-auto p-8">
+      <Toaster position="top-center" reverseOrder={false} />
+      {loading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <p className="text-4xl font-bold mb-4">{product.title}</p>
-            <p className="mb-4 uppercase font-bold">{product.category}</p>
-            <p className="mb-4">{product.description}</p>
-            <p className="text-[18px] line-clamp-2 mb-4 flex items-center gap-1">
-              {product.rating.rate}
-              <span className="flex">{renderStars(product.rating.rate)}</span>
-            </p>
-            <p className="text-3xl font-semibold text-blue-600 mb-4">
-              {convertPrice(product.price)} {selectedCurrency}
-            </p>
-
-            <Button
-              onClick={() => handleAddBasket(product)}
-              className="px-5 py-2 mt-2 rounded-sm hover:bg-[#ca9334] bg-[#E6A128] duration-200  uppercase text-white text-[14px]"
-            >
-              Add Basket
-            </Button>
+            <Skeleton type="detail-image" />
+          </div>
+          <div className="flex flex-col ">
+            <Skeleton type="title" />
+            <Skeleton type="category" />
+            <Skeleton type="text" />
+            <Skeleton type="rating" />
+            <Skeleton type="price" />
+            <Skeleton type="button" />
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <img
+              className="rounded-lg shadow-lg h-[600px]"
+              src={product?.image}
+            />
+          </div>
+          <div className="flex flex-col justify-between">
+            <div>
+              <p className="text-4xl font-bold mb-4">{product?.title}</p>
+              <p className="mb-4 uppercase font-bold">{product?.category}</p>
+              <p className="mb-4">{product?.description}</p>
+              <p className="text-[18px] line-clamp-2 mb-4 flex items-center gap-1">
+                {product?.rating?.rate}
+                <span className="flex">
+                  {product &&
+                    product.rating &&
+                    renderStars(product.rating.rate)}
+                </span>
+              </p>
+              <p className="text-3xl font-semibold text-blue-600 mb-4">
+                {product && product.price && convertPrice(product?.price)}{" "}
+                {selectedCurrency}
+              </p>
+
+              <Button
+                onClick={() => product && handleAddBasket(product)}
+                className="px-5 py-2 mt-2 rounded-sm hover:bg-[#ca9334] bg-[#E6A128] duration-200  uppercase text-white text-[14px]"
+              >
+                Add Basket
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
