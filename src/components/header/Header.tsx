@@ -6,14 +6,18 @@ import { SlBasket } from "react-icons/sl";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import Theme from "../theme/Theme";
+import { useGetCategoriesQuery } from "../../redux/api/fakeApi";
+import Skeleton from "../skeleton/Skeleton";
 // import { setCurrency } from "../../redux/currencySlice";
 // import useConvertCurrency from "../utilities/convertCurrency";
+type ApiResponse<T> = {
+  data?: T;
+  isLoading: boolean;
+};
 
 function Header() {
-  // const dispatch = useDispatch();
-  const menuItems: string[] = ["Оплата", "Доставка", "Контакты", "Госзаказ"];
+  const { data, isLoading } = useGetCategoriesQuery() as ApiResponse<string[]>;
   const basketItems = useSelector((state: RootState) => state.basket.basket);
-
 
   //AYLIG LIMIT BITIB
   // const selectedCurrency = useSelector(
@@ -32,16 +36,21 @@ function Header() {
             <img src="../img/logo.png" alt="" />
           </NavLink>
         </div>
-        <div className="col-span-1 flex justify-center items-center gap-8 ">
-          {menuItems.map((item, index) => (
-            <NavLink
-              className='relative no-underline after:content-[""] after:absolute after:bg-[#E6A128] after:h-[3px] after:w-0 after:duration-300 after:left-0 after:bottom-[-5px] after:hover:w-[30px] hover:text-black transition-all'
-              to={`/${item.toLowerCase()}`}
-              key={index}
-            >
-              {item}
-            </NavLink>
-          ))}
+        <div className="col-span-1 flex justify-between items-center gap-4">
+          {isLoading
+            ? Array.from({ length: 4 }).map((_, index) => (
+                <Skeleton key={index} type="title" />
+              ))
+            : data &&
+              data.map((item: string, index: number) => (
+                <NavLink
+                  className='relative text-[16px] no-underline after:content-[""] after:absolute after:bg-[#E6A128] after:h-[3px] after:w-0 after:duration-300 after:left-0 after:bottom-[-5px] after:hover:w-[30px] hover:text-black transition-all'
+                  to={`all-products/${item.toLowerCase()}`}
+                  key={index}
+                >
+                  {item}
+                </NavLink>
+              ))}
         </div>
         <div className="col-span-1 flex justify-end items-center gap-4">
           {/* <select
