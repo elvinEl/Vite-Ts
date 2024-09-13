@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { FaChevronRight } from "react-icons/fa";
-import axios from "axios";
 import Button from "../button/Button";
 import { TopProductsType, CurrencyRates } from "../../types/Types";
 import { RootState } from "../../redux/store";
@@ -11,38 +10,32 @@ import { handleAddBasket } from "../utilities/handleBasket";
 import useConvertCurrency from "../utilities/convertCurrency";
 import { renderStars } from "../utilities/renderStars";
 import Skeleton from "../skeleton/Skeleton";
-
+import { useGetProductsQuery } from "../../redux/api/fakeApi";
 function TopProducts() {
+  const { data: productsApi, isLoading } = useGetProductsQuery();
   const dispatch = useDispatch();
   const theme = useSelector((state: RootState) => state.theme.colorScheme);
   const currencyRates: CurrencyRates = useConvertCurrency();
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.selectedCurrency
   );
-  const [products, setProducts] = useState<TopProductsType[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<TopProductsType[]>(
+    []
+  );
   const [selectedFilter, setSelectedFilter] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  const getProducts = async () => {
-    try {
-      const response = await axios.get("https://fakestoreapi.com/products");
-      setProducts(response.data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
   useEffect(() => {
-    getProducts();
-  }, []);
-
+    if (productsApi) {
+      setFilteredProducts(productsApi);
+    }
+  }, [productsApi]);
   const handleFilter = (filterValue: string) => {
     setSelectedFilter(filterValue);
-    const sortedProducts = [...products].sort((a, b) =>
-      filterValue === "asc" ? a.price - b.price : b.price - a.price
-    );
-    setProducts(sortedProducts);
+    if (productsApi) {
+      const sortedProducts = [...productsApi].sort((a, b) =>
+        filterValue === "asc" ? a.price - b.price : b.price - a.price
+      );
+      setFilteredProducts(sortedProducts);
+    }
   };
 
   const convertPrice = (price: number) => {
@@ -86,7 +79,7 @@ function TopProducts() {
         </div>
       </div>
       <div className="grid grid-cols-5 gap-5 py-4 max-2xl:grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
-        {loading
+        {isLoading
           ? Array.from({ length: 10 }).map((_, index) => (
               <div
                 key={index}
@@ -100,7 +93,7 @@ function TopProducts() {
                 <Skeleton type="button" />
               </div>
             ))
-          : products.slice(0, 10).map((product: TopProductsType) => (
+          : filteredProducts.slice(0, 10).map((product: TopProductsType) => (
               <div
                 key={product.id}
                 className="col-span-1 product-card flex flex-col justify-between"
