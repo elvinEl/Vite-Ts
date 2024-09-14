@@ -1,20 +1,19 @@
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { TopProductsType, CurrencyRates } from "../../types/Types";
 import { addBasket } from "../../redux/basketSlice";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import Button from "../../components/button/Button";
-// import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
 import useConvertCurrency from "../../components/utilities/convertCurrency";
 import { RootState } from "../../redux/store";
-import axios from "axios";
 import { renderStars } from "../../components/utilities/renderStars";
 import Skeleton from "../../components/skeleton/Skeleton";
+import { useGetProductsByIdQuery } from "../../redux/api/fakeApi";
 function DetailProducts() {
   const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
-  const [loading, setLoading] = useState(true);
+  const validId = id || "";
+  const { data: product, isLoading } = useGetProductsByIdQuery({ id: validId });
   const currencyRates: CurrencyRates = useConvertCurrency();
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.selectedCurrency
@@ -25,63 +24,14 @@ function DetailProducts() {
     }
     return price;
   };
-  const [product, setProduct] = useState<TopProductsType | null>(null);
-  const getProductsWithId = async () => {
-    try {
-      const response = await axios.get(
-        `https://fakestoreapi.com/products/${id}`
-      );
-      setProduct(response.data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    getProductsWithId();
-  }, []);
   const handleAddBasket = (product: TopProductsType) => {
     dispatch(addBasket(product));
     toast.success("Товар добавлен в корзину");
   };
-  {
-    /* <div>
-          <div className="relative image-card">
-            <image
-              className="w-full rounded-lg shadow-lg h-[600px]"
-              src={selectedImg}
-            />
-            <Button
-              onClick={handleNextImage}
-              className="arrow hidden absolute top-1/2 transform -translate-y-1/2 right-0 -translate-x-8 cursor-pointer bg-gray-400 rounded-[50%] p-1 text-white"
-            >
-              <FiArrowRight size={32} />
-            </Button>
-            <Button
-              onClick={handlePrevImage}
-              className="arrow hidden absolute top-1/2 transform -translate-y-1/2 left-0 translate-x-8 cursor-pointer bg-gray-400 rounded-[50%] p-1 text-white"
-            >
-              <FiArrowLeft size={32} />
-            </Button>
-          </div>
-
-          <div className="flex mt-4">
-            {product.image.map((imgSrc, index) => (
-              <img
-                key={index}
-                className="w-20 h-20 mr-2 cursor-pointer border border-gray-300 rounded"
-                src={imgSrc}
-                onClick={() => setSelectedImg(imgSrc)}
-              />
-            ))}
-          </div>
-        </div> */
-  }
   return (
     <div className="container mx-auto p-8">
       <Toaster position="top-center" reverseOrder={false} />
-      {loading ? (
+      {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
             <Skeleton type="detail-image" />

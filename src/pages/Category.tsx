@@ -1,4 +1,4 @@
-import products from "../mocks/topProductsData.json";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { NavLink } from "react-router-dom";
@@ -6,39 +6,20 @@ import Button from "../components/button/Button";
 import { handleAddBasket } from "../components/utilities/handleBasket";
 import { Toaster } from "react-hot-toast";
 import PriceFilter from "../components/utilities/PriceFilter";
-import { useEffect, useState } from "react";
 import useConvertCurrency from "../components/utilities/convertCurrency";
 import { CurrencyRates, TopProductsType } from "../types/Types";
-import axios from "axios";
 import { renderStars } from "../components/utilities/renderStars";
 import Skeleton from "../components/skeleton/Skeleton";
+import { useGetProductsByCategoryQuery } from "../redux/api/fakeApi";
 function Category() {
   const dispatch = useDispatch();
   const categoryName = useSelector(
     (state: RootState) => state.category.selectedCategory
   );
-  const [selectedCategory, setSelectedCategory] = useState<TopProductsType[]>(
-    []
-  );
-  const [loading, setLoading] = useState(true);
-
-  const fetchCategoryItems = async () => {
-    try {
-      const response = await axios.get(
-        `https://fakestoreapi.com/products/category/${categoryName}`
-      );
-
-      setSelectedCategory(response.data);
-    } catch (error) {
-      console.error("Failed to fetch data", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchCategoryItems();
-  }, [categoryName]);
+  const validCategoryName = categoryName || "";
+  const { data: selectedCategory, isLoading } = useGetProductsByCategoryQuery({
+    categoryName: validCategoryName,
+  });
 
   const currencyRates: CurrencyRates = useConvertCurrency();
   const selectedCurrency = useSelector(
@@ -54,11 +35,11 @@ function Category() {
 
   const [maxCount, setMaxCount] = useState<string>("");
   const [minCount, setMinCount] = useState<string>("");
-  const [selectedCategoryName, setSelectedCategoryName] = useState<string>(
-    categoryName || ""
-  );
+  // const [selectedCategoryName, setSelectedCategoryName] = useState<string>(
+  //   categoryName || ""
+  // );
 
-  const filteredItems = selectedCategory.filter((item) => {
+  const filteredItems = (selectedCategory || []).filter((item) => {
     const minPrice = parseFloat(minCount) || 0;
     const maxPrice = parseFloat(maxCount) || Infinity;
     return item.price >= minPrice && item.price <= maxPrice;
@@ -71,15 +52,14 @@ function Category() {
         setMinCount={setMinCount}
         maxCount={maxCount}
         setMaxCount={setMaxCount}
-        selectedCategory={selectedCategoryName}
-        setSelectedCategory={setSelectedCategoryName}
-        categories={products.categories}
+        // selectedCategory={selectedCategoryName}
+        // setSelectedCategory={setSelectedCategoryName}
       />
       <div className="grid grid-cols-5 gap-5 py-4 max-2xl:grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
         <Toaster position="top-center" reverseOrder={false} />
 
-        {loading
-          ? Array.from({ length: 10 }).map((_, index) => (
+        {isLoading
+          ? Array.from({ length: 10 }).map((_: void, index: number) => (
               <div
                 key={index}
                 className="col-span-1 product-card flex flex-col justify-between"

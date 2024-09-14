@@ -1,4 +1,3 @@
-import { useLocation } from "react-router-dom";
 import { PriceFilterType } from "../../types/Types";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -7,12 +6,12 @@ const PriceFilter: React.FC<PriceFilterType> = ({
   setMinCount,
   maxCount,
   setMaxCount,
-  selectedCategory,
-  setSelectedCategory,
-  categories,
+  // selectedCategory,
+  // setSelectedCategory,
+  // categories,
 }) => {
-  const location = useLocation();
-  const isProductSlug = location.pathname.startsWith("/all-products/");
+  // const location = useLocation();
+  // const isProductSlug = location.pathname.startsWith("/all-products/");
   const theme = useSelector((state: RootState) => state.theme.colorScheme);
 
   return (
@@ -21,7 +20,7 @@ const PriceFilter: React.FC<PriceFilterType> = ({
         theme === "dark" ? "bg-[#121212]" : ""
       }`}
     >
-      {!isProductSlug && (
+      {/* {!isProductSlug && (
         <select
           className="outline-none px-3 py-1 border-[1px]"
           value={selectedCategory}
@@ -34,7 +33,7 @@ const PriceFilter: React.FC<PriceFilterType> = ({
             </option>
           ))}
         </select>
-      )}
+      )} */}
       <input
         value={minCount}
         onChange={(e) => setMinCount(e.target.value)}

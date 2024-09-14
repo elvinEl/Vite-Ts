@@ -1,19 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import Button from "../button/Button";
 import { NavLink } from "react-router-dom";
 import { FaAngleRight } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setSelectedCategory } from "../../redux/categorySlice";
-import axios from "axios";
 
-function Menu() {
+interface MenuProps {
+  categories: string[];
+}
+
+function Menu({ categories = [] }: MenuProps) {
   const dispatch = useDispatch();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [openCategoryIndex, setOpenCategoryIndex] = useState<number | null>(
     null
   );
-  const [categories, setCategories] = useState<string[]>([]);
 
   const toggleMenu = () => {
     setIsOpenMenu(!isOpenMenu);
@@ -31,21 +33,6 @@ function Menu() {
     dispatch(setSelectedCategory(categoryName));
     setIsOpenMenu(false);
   };
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(
-          "https://fakestoreapi.com/products/categories"
-        );
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
 
   return (
     <div className="relative">
@@ -68,7 +55,7 @@ function Menu() {
       {isOpenMenu && (
         <div className="absolute mt-4 w-full rounded-md shadow-lg z-10">
           <ul className="bg-white w-60 border-[1px] text-black">
-            {categories.map((category, index) => (
+            {categories.map((category: string, index: number) => (
               <li
                 key={index}
                 className="px-4 flex justify-between items-center py-2 hover:bg-gray-100 cursor-pointer relative"
@@ -81,7 +68,7 @@ function Menu() {
                   <div className="absolute w-full flex flex-col left-full top-0 bg-white shadow-lg z-10">
                     <NavLink
                       onClick={() => handleSelectCategory(category)}
-                      to={`all-products/${category}`}
+                      to={`products/${category}`}
                       className="px-6 w-full py-2 hover:bg-gray-100 cursor-pointer"
                     >
                       {category}

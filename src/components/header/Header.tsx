@@ -3,11 +3,12 @@ import Search from "./Search";
 import Menu from "./Menu";
 import { CgProfile } from "react-icons/cg";
 import { SlBasket } from "react-icons/sl";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import Theme from "../theme/Theme";
 import { useGetCategoriesQuery } from "../../redux/api/fakeApi";
 import Skeleton from "../skeleton/Skeleton";
+import { setSelectedCategory } from "../../redux/categorySlice";
 // import { setCurrency } from "../../redux/currencySlice";
 // import useConvertCurrency from "../utilities/convertCurrency";
 type ApiResponse<T> = {
@@ -16,9 +17,14 @@ type ApiResponse<T> = {
 };
 
 function Header() {
-  const { data, isLoading } = useGetCategoriesQuery() as ApiResponse<string[]>;
-  const basketItems = useSelector((state: RootState) => state.basket.basket);
+  const dispatch = useDispatch();
+  const { data: categories, isLoading } =
+    useGetCategoriesQuery() as ApiResponse<string[]>;
 
+  const basketItems = useSelector((state: RootState) => state.basket.basket);
+  const handleSelectCategory = (categoryName: string) => {
+    dispatch(setSelectedCategory(categoryName));
+  };
   //AYLIG LIMIT BITIB
   // const selectedCurrency = useSelector(
   //   (state: RootState) => state.currency.selectedCurrency
@@ -30,7 +36,7 @@ function Header() {
 
   return (
     <>
-      <div className="grid grid-cols-3 py-8 text-[18px] font-medium">
+      <div className="flex justify-between items-center py-8 text-[18px] font-medium">
         <div className="col-span-1 flex items-start">
           <NavLink to="/">
             <img src="../img/logo.png" alt="" />
@@ -38,17 +44,18 @@ function Header() {
         </div>
         <div className="col-span-1 flex justify-between items-center gap-4">
           {isLoading
-            ? Array.from({ length: 4 }).map((_, index) => (
+            ? Array.from({ length: 4 }).map((_: any, index: number) => (
                 <Skeleton key={index} type="title" />
               ))
-            : data &&
-              data.map((item: string, index: number) => (
+            : categories &&
+              categories.map((category: string, index: number) => (
                 <NavLink
+                  onClick={() => handleSelectCategory(category)}
                   className='relative text-[16px] no-underline after:content-[""] after:absolute after:bg-[#E6A128] after:h-[3px] after:w-0 after:duration-300 after:left-0 after:bottom-[-5px] after:hover:w-[30px] hover:text-black transition-all'
-                  to={`all-products/${item.toLowerCase()}`}
+                  to={`products/${category}`}
                   key={index}
                 >
-                  {item}
+                  {category}
                 </NavLink>
               ))}
         </div>
@@ -70,7 +77,7 @@ function Header() {
         </div>
       </div>
       <div className="flex w-full justify-between gap-12">
-        <Menu />
+        {categories && <Menu categories={categories} />}
         <Search />
         <div className="flex justify-end items-center gap-8">
           <NavLink className="relative" to="/basket">

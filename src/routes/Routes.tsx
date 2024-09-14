@@ -11,7 +11,7 @@ const routes = (
     <Route path="basket" element={<Basket />} />
     <Route path="detail/:id" element={<DetailProducts />} />
     <Route path="all-products" element={<AllProducts />} />
-    <Route path="all-products/:slug" element={<Category />} />
+    <Route path="products/:slug" element={<Category />} />
   </Route>
 );
 
