@@ -13,7 +13,8 @@ function DetailProducts() {
   const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
   const validId = id || "";
-  const { data: product, isLoading } = useGetProductsByIdQuery({ id: validId });
+  const { data, isLoading } = useGetProductsByIdQuery({ id: validId });
+  const product = Array.isArray(data) ? data[0] : data;
   const currencyRates: CurrencyRates = useConvertCurrency();
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.selectedCurrency

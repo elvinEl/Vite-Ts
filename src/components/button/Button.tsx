@@ -1,4 +1,3 @@
-import React from "react";
 import { ButtonProps } from "../../types/Types";
 
 const Button: React.FC<Partial<ButtonProps>> = ({
