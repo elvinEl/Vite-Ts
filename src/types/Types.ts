@@ -60,9 +60,9 @@ export interface PriceFilterType {
   setMinCount: (value: string) => void;
   maxCount: string;
   setMaxCount: (value: string) => void;
-  selectedCategory: string;
-  setSelectedCategory: (value: string) => void;
-  categories: { name: string }[];
+  selectedCategory?: string;
+  setSelectedCategory?: (value: string) => void;
+  categories?: { name: string }[];
 }
 interface CurrencyRate {
   value: number;

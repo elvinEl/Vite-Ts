@@ -59,7 +59,7 @@ function Category() {
         <Toaster position="top-center" reverseOrder={false} />
 
         {isLoading
-          ? Array.from({ length: 10 }).map((_: void, index: number) => (
+          ? Array.from({ length: 10 }).map((_, index: number) => (
               <div
                 key={index}
                 className="col-span-1 product-card flex flex-col justify-between"
