@@ -1,4 +1,4 @@
-import * as Cookies from "js-cookie";
+import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { CiLight, CiDark } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
