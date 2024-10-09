@@ -15,7 +15,7 @@
 .product-card:hover img {
   transform: scale(1.1);
 }
-.product-card img{
+.product-card img {
   transition: transform 0.3s ease;
 }
 
@@ -52,7 +52,15 @@
   height: 25px;
   width: 25%;
 }
-.skeleton.detail-image{
+.skeleton.detail-image {
   height: 400px;
   width: 100%;
+}
+.skeleton.menu {
+  height: 50px;
+  width: 180px;
+}
+.skeleton.menuItems {
+  width: 100px;
+  height: 30px;
 }

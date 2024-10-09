@@ -11,7 +11,7 @@ import useConvertCurrency from "../utilities/convertCurrency";
 import { renderStars } from "../utilities/renderStars";
 import Skeleton from "../skeleton/Skeleton";
 import { useGetProductsQuery } from "../../redux/api/fakeApi";
-function TopProducts() {
+function Products() {
   const { data: productsApi, isLoading } = useGetProductsQuery();
   const dispatch = useDispatch();
   const theme = useSelector((state: RootState) => state.theme.colorScheme);
@@ -80,7 +80,7 @@ function TopProducts() {
       </div>
       <div className="grid grid-cols-5 gap-5 py-4 max-2xl:grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
         {isLoading
-          ? Array.from({ length: 10 }).map((_, index) => (
+          ? Array.from({ length: 10 }).map((_, index:number) => (
               <div
                 key={index}
                 className="col-span-1 product-card flex flex-col justify-between"
@@ -143,4 +143,4 @@ function TopProducts() {
   );
 }
 
-export default TopProducts;
+export default Products;

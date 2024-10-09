@@ -5,12 +5,16 @@ import { NavLink } from "react-router-dom";
 import { FaAngleRight } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setSelectedCategory } from "../../redux/categorySlice";
+import Skeleton from "../skeleton/Skeleton";
 
 interface MenuProps {
   categories: string[];
+  isLoading: boolean;
 }
 
-function Menu({ categories = [] }: MenuProps) {
+function Menu({ categories = [], isLoading }: MenuProps) {
+  console.log(isLoading);
+
   const dispatch = useDispatch();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [openCategoryIndex, setOpenCategoryIndex] = useState<number | null>(
@@ -36,21 +40,27 @@ function Menu({ categories = [] }: MenuProps) {
 
   return (
     <div className="relative">
-      <Button
-        onClick={toggleMenu}
-        className="px-4 py-2 bg-[#E6A128] text-white rounded-[5px]"
-      >
-        <p className="text-[22px] flex items-center gap-2">
-          <span>
-            {isOpenMenu ? (
-              <AiOutlineClose size={22} />
-            ) : (
-              <AiOutlineMenu size={22} />
-            )}
-          </span>
-          КАТАЛОГ
-        </p>
-      </Button>
+    {isLoading ? (
+        <div >
+          <Skeleton type="menu"  />
+        </div>
+      ) : (
+        <Button
+          onClick={toggleMenu}
+          className="w-[180px]  px-4 py-2 bg-[#E6A128] text-white rounded-[5px]"
+        >
+          <p className="text-[22px] flex items-center gap-2">
+            <span>
+              {isOpenMenu ? (
+                <AiOutlineClose size={22} />
+              ) : (
+                <AiOutlineMenu size={22} />
+              )}
+            </span>
+            КАТАЛОГ
+          </p>
+        </Button>
+      )}
 
       {isOpenMenu && (
         <div className="absolute mt-4 w-full rounded-md shadow-lg z-10">

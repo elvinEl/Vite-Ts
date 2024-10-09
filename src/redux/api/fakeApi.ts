@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { TopProductsType } from "../../types/Types";
 export const fakeApi = createApi({
   reducerPath: "fakeApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://fakestoreapi.com/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_APP_BASE_URL }),
   endpoints: (builder) => ({
     getCategories: builder.query<string[], void>({
       query: () => `products/categories`,

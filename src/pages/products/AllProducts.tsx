@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import axios from "axios";
 import Button from "../../components/button/Button";
 import { TopProductsType, CurrencyRates } from "../../types/Types";
 import { RootState } from "../../redux/store";
@@ -10,15 +8,15 @@ import { handleAddBasket } from "../../components/utilities/handleBasket";
 import useConvertCurrency from "../../components/utilities/convertCurrency";
 import { renderStars } from "../../components/utilities/renderStars";
 import Skeleton from "../../components/skeleton/Skeleton";
+import { useGetProductsQuery } from "../../redux/api/fakeApi";
 
 function AllProducts() {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
+  const { data: products, isLoading } = useGetProductsQuery();
   const currencyRates: CurrencyRates = useConvertCurrency();
   const selectedCurrency = useSelector(
     (state: RootState) => state.currency.selectedCurrency
   );
-
   const convertPrice = (price: number) => {
     if (currencyRates[selectedCurrency]) {
       return (price / currencyRates[selectedCurrency].value).toFixed(0);
@@ -26,28 +24,12 @@ function AllProducts() {
     return price;
   };
 
-  const [filteredData, setFilteredData] = useState<TopProductsType[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("https://fakestoreapi.com/products");
-        setFilteredData(response.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-      {loading ? (
+      {isLoading ? (
         <div className="grid grid-cols-5 gap-6 py-4">
-          {Array.from({ length: 10 }).map((_, index) => (
+          {Array.from({ length: 10 }).map((_: any, index: number) => (
             <div
               key={index}
               className="col-span-1 product-card flex flex-col justify-between"
@@ -61,9 +43,9 @@ function AllProducts() {
             </div>
           ))}
         </div>
-      ) : filteredData.length !== 0 ? (
+      ) : products && products.length !== 0 ? (
         <div className="grid grid-cols-5 gap-6 py-4">
-          {filteredData.map((product: TopProductsType) => (
+          {products.map((product: TopProductsType) => (
             <div
               key={product.id}
               className="col-span-1 product-card flex flex-col justify-between"

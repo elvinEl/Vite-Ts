@@ -45,7 +45,7 @@ function Header() {
         <div className="col-span-1 flex justify-between items-center gap-4">
           {isLoading
             ? Array.from({ length: 4 }).map((_: any, index: number) => (
-                <Skeleton key={index} type="title" />
+                <Skeleton key={index} type="menuItems" />
               ))
             : categories &&
               categories.map((category: string, index: number) => (
@@ -76,8 +76,8 @@ function Header() {
           <p>8 800 355 55 55</p>
         </div>
       </div>
-      <div className="flex w-full justify-between gap-12">
-        {categories && <Menu categories={categories} />}
+      <div className="flex w-full h-[50px] justify-between gap-12">
+        <Menu categories={categories || []} isLoading={isLoading} />
         <Search />
         <div className="flex justify-end items-center gap-8">
           <NavLink className="relative" to="/basket">
